@@ -3,12 +3,11 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	<display-name>vraptor-blank-project</display-name>
 
 	<context-param>
         <param-name>br.com.caelum.vraptor.packages</param-name>
         <!-- Change this parameter to your app base package -->
-        <param-value>br.com.caelum.vraptor.blank</param-value>
+        <param-value>br.com.caelum.rest.server</param-value>
     </context-param>
     
 	<filter>
