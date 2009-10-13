@@ -13,19 +13,23 @@ import org.json.JSONWriter;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
+import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.view.Results;
 
 @Resource
 public class IndexController {
 
 	private final HttpServletResponse response;
+	private final Result result;
 
 	@Path("/")
 	public void index() {
 
 	}
 
-	public IndexController(HttpServletResponse response) {
+	public IndexController(HttpServletResponse response, Result result) {
 		this.response = response;
+		this.result = result;
 	}
 
 	@Path("/createSomething")
@@ -49,6 +53,6 @@ public class IndexController {
 			main.key("location").value(location);
 		}
 		main.endObject();
-
+		result.use(Results.nothing());
 	}
 }
