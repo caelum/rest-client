@@ -11,23 +11,29 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.http.route.Router;
 import br.com.caelum.vraptor.view.Results;
 
 @Resource
 public class OrderController {
 
 	private final Result result;
+	private final Router route;
 
-	public OrderController(Result result) {
+	public OrderController(Result result, Router route) {
 		this.result = result;
+		this.route = route;
 	}
 
 	private static Map<Long, String> orders = new HashMap<Long, String>();
 
 	@Path("/order/{id}")
 	@Get
-	public void getOrder(Long id) {
+	public void getOrder(Long id) throws SecurityException, NoSuchMethodException {
+
 		String order = orders.get(id);
+		String uri = route.urlFor(OrderController.class, OrderController.class.getMethod("removeOrder", Long.class), new Object[] {id});
+		order += "\n<atom:link rel=\"cancel\" href=\"" + uri + "\" />";
 		result.include("order", order);
 		if(order == null) {
 			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);

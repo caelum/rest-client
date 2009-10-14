@@ -22,6 +22,7 @@
 				function callbackCriado(uri) {
 					console.log(uri);
 					return function(result){
+						console.log(result);
 						$('#activities').append('<tr><td>' + result.method + '</td>\
 								<td>' + result.uri + '</td>\
 								<td>' + result.responseCode + '</td>\

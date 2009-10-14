@@ -69,8 +69,30 @@ public class IndexController {
 
 		json.key("response").value(response);
 		json.key("responseCode").value(resultCode);
+		JSONWriter array = json.key("links").array();
+
+		String[] lines = response.split("\n");
+		for (String line : lines) {
+			if(line.startsWith("<atom:link")) {
+				String href = extractAttribute(line, "href");
+				JSONWriter object = array.object();
+				object.key("href").value(href);
+				String rel = extractAttribute(line, "rel");
+				object.key("rel").value(rel);
+				object.endObject();
+
+			}
+		}
+		array.endArray();
 		json.key("uri").value(uri);
 		json.endObject();
+	}
+
+	private String extractAttribute(String line, String attribute) {
+		String base = " " + attribute+"=\"";
+		int inicio = line.indexOf(base) + base.length();
+		String href = line.substring(inicio, line.indexOf("\"", inicio + 1));
+		return href;
 	}
 
 	private JSONWriter getWriter() throws JSONException, IOException {
