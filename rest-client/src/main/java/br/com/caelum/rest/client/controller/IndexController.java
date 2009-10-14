@@ -57,4 +57,25 @@ public class IndexController {
 		json.endObject();
 		result.use(Results.nothing());
 	}
+
+	@Path("/grab")
+	@Get
+	public void grab(String uri) throws JSONException, IOException {
+		HttpClient client = new HttpClient();
+
+
+		HttpMethodWrapper httpMethod = HttpMethod.GET.getHttpMethod(uri);
+
+		int resultCode = httpMethod.executeMethod(client);
+
+		String response = httpMethod.getResponseBodyAsString();
+
+		JSONWriter json = new JSONWriter(this.response.getWriter()).object();
+
+		json.key("response").value(response);
+		json.key("responseCode").value(resultCode);
+		json.key("uri").value(uri);
+		json.endObject();
+		result.use(Results.nothing());
+	}
 }
