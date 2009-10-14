@@ -21,7 +21,7 @@
 				}
 				function callbackCriado(uri) {
 					console.log(uri);
-					return function(result, status){
+					return function(result){
 						$('#activities').append('<tr><td>' + result.method + '</td>\
 								<td>' + result.uri + '</td>\
 								<td>' + result.responseCode + '</td>\
@@ -39,7 +39,7 @@
 					$('#view').show();
 					$('#view').html('Loading...');
 					$.getJSON('grab', { "uri" : uri},
-						function(result, status){
+						function(result){
 							$('#view').html(result.response);
 						}
 					);
