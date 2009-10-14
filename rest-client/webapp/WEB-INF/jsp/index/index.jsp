@@ -31,6 +31,7 @@
 					<option value="GET">GET</option>
 					<option value="PUT">PUT</option>
 					<option value="DELETE">DELETE</option>
+					<option value="OPTIONS">OPTIONS</option>
 				</select>
 				<br />
 				Name: <input type="text" name="contentName" id="contentName"><br />
