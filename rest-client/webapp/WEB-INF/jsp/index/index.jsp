@@ -42,6 +42,10 @@
 					$.getJSON('grab', { "uri" : uri},
 						function(result){
 							$('#view').html(result.response);
+
+							$.each(result.links, function(i, val) {
+								console.log(val);
+							});
 						}
 					);
 				}
