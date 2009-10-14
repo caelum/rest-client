@@ -9,11 +9,11 @@
 			<script type="text/javascript">
 				function callbackCriado(uri) {
 					console.log(uri);
-					return function(data, textStatus){
-						$('#activities').append('<tr><td>' + data.method + '</td>\
-								<td>' + data.uri + '</td>\
-								<td>' + data.responseCode + '</td>\
-								<td><a href="' + data.location +'" target="_blank">' + data.location + '</a></td></tr>');
+					return function(result, status){
+						$('#activities').append('<tr><td>' + result.method + '</td>\
+								<td>' + result.uri + '</td>\
+								<td>' + result.responseCode + '</td>\
+								<td><a href="' + result.location +'" target="_blank">' + result.location + '</a></td></tr>');
 					};
 				}
 				function cria() {
