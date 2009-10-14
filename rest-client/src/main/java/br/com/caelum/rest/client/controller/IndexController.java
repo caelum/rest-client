@@ -5,11 +5,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.PostMethod;
 import org.json.JSONException;
 import org.json.JSONWriter;
 
+import br.com.caelum.rest.client.http.HttpMethod;
+import br.com.caelum.rest.client.http.HttpMethodWrapper;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -24,7 +24,6 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {
-
 	}
 
 	public IndexController(HttpServletResponse response, Result result) {
@@ -34,22 +33,23 @@ public class IndexController {
 
 	@Path("/createSomething")
 	@Get
-	public void createSomething(String uri, String contentName, String contentValue) throws HttpException,
-			IOException, JSONException {
+	public void createSomething(HttpMethod method, String uri, String contentName, String contentValue) throws JSONException, IOException {
 		HttpClient client = new HttpClient();
-		PostMethod method = new PostMethod(uri);
-		method.addParameter(contentName, contentValue);
 
-		int resultCode = client.executeMethod(method);
 
-		String response = method.getResponseBodyAsString();
+		HttpMethodWrapper httpMethod = method.getHttpMethod(uri);
+
+		httpMethod.addParameter(contentName, contentValue);
+		int resultCode = httpMethod.executeMethod(client);
+
+		String response = httpMethod.getResponseBodyAsString();
 
 		JSONWriter main = new JSONWriter(this.response.getWriter()).object();
 
 		main.key("response").value(response);
 		main.key("responseCode").value(resultCode);
 		if (resultCode == 201) {
-			String location = method.getResponseHeader("location").getValue();
+			String location = httpMethod.getResponseHeader("location").getValue();
 			main.key("location").value(location);
 		}
 		main.endObject();

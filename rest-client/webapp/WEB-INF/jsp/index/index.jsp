@@ -24,7 +24,14 @@
 				}
 			</script>
 			<form action="" method="post" id="form" >
-			URI: <input type="text" name="uri" id="uri" style="width: 400px;">
+			URI: <input type="text" name="uri" id="uri" style="width: 400px;"/>
+				<br />
+				<select name="method">
+					<option value="POST">POST</option>
+					<option value="GET">GET</option>
+					<option value="PUT">PUT</option>
+					<option value="DELETE">DELETE</option>
+				</select>
 				<br />
 				Name: <input type="text" name="contentName" id="contentName"><br />
 				Value: <textarea name="contentValue" style="width: 400px"></textarea>
