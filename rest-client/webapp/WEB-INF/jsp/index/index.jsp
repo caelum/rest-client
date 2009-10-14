@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<div>
-			<a href="javascript:showCreation(); return false;">Creation</a> | <a href="javascript:showView(); return false;">View</a>
+			<a href="#" onclick="showCreation()">Creation</a> | <a href="#" onclick="showView()">View</a>
 		</div>
 		<div id="left">
 			<div id="creation">
