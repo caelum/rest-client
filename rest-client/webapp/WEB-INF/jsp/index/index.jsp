@@ -25,7 +25,7 @@
 						$('#activities').append('<tr><td>' + result.method + '</td>\
 								<td>' + result.uri + '</td>\
 								<td>' + result.responseCode + '</td>\
-								<td><a href="javascript:view(' + result.location + '); return false;">' + result.location + '</a></td></tr>');
+								<td><a href="#" onclick="view(\'' + result.location + '\')">' + result.location + '</a></td></tr>');
 					};
 				}
 				function cria() {
