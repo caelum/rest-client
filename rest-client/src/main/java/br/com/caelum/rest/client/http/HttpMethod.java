@@ -26,6 +26,12 @@ public enum HttpMethod {
 		public HttpMethodWrapper getHttpMethod(String uri) {
 			return null;
 		}
+	},
+	OPTIONS {
+		@Override
+		public HttpMethodWrapper getHttpMethod(String uri) {
+			return null;
+		}
 	};
 
 	public abstract HttpMethodWrapper getHttpMethod(String uri);
