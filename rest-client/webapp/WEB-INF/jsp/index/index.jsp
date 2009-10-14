@@ -46,20 +46,16 @@
 				}
 			</script>
 			<form action="" method="post" id="form" >
-			URI: <input type="text" name="uri" id="uri" style="width: 400px;"/>
-				<br />
-				HTTP Method: <select name="method">
+			<p><label for="uri">URI:</label><input type="text" name="uri" id="uri" style="width: 400px;"/></p>
+			<p><label for="method">Method:</label><select name="method" id="method">
 					<option value="POST">POST</option>
 					<option value="GET">GET</option>
 					<option value="PUT">PUT</option>
 					<option value="DELETE">DELETE</option>
 					<option value="OPTIONS">OPTIONS</option>
-				</select>
-				<br />
-				Name: <input type="text" name="contentName" id="contentName"><br />
-				Value: <textarea name="contentValue" style="width: 400px"></textarea>
-				
-				<br />
+				</select></p>
+				<p><label for="contentName">Name:</label><input type="text" name="contentName" id="contentName"></p>
+				<p><label for="contentValue">Value:</label><textarea id="contentValue" name="contentValue" style="width: 400px"></textarea></p>
 				
 				<input type="button" value="Send"  onclick="cria()">
 			</form>
