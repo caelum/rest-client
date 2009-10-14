@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/rest-client/css/styles.css">
 	</head>
 	<body>
 		<div id="left">
@@ -9,7 +10,7 @@
 				function callbackCriado(uri) {
 					console.log(uri);
 					return function(data, textStatus){
-						
+						alert(data.location);
 					};
 				}
 				function cria() {
@@ -31,7 +32,7 @@
 			</form>
 		</div>
 		<div id="right">
-		
+			<h2>Activity History</h2>
 		</div>
 	</body>
 </html>
