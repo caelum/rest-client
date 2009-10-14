@@ -36,15 +36,13 @@ public class IndexController {
 	public void createSomething(HttpMethod method, String uri, String contentName, String contentValue) throws JSONException, IOException {
 		HttpClient client = new HttpClient();
 
-
 		HttpMethodWrapper httpMethod = method.getHttpMethod(uri);
 
 		httpMethod.addParameter(contentName, contentValue);
 		int resultCode = httpMethod.executeMethod(client);
-
 		String response = httpMethod.getResponseBodyAsString();
 
-		JSONWriter json = new JSONWriter(this.response.getWriter()).object();
+		JSONWriter json = getWriter();
 
 		json.key("response").value(response);
 		json.key("responseCode").value(resultCode);
@@ -55,7 +53,6 @@ public class IndexController {
 			json.key("location").value(location);
 		}
 		json.endObject();
-		result.use(Results.nothing());
 	}
 
 	@Path("/grab")
@@ -63,19 +60,22 @@ public class IndexController {
 	public void grab(String uri) throws JSONException, IOException {
 		HttpClient client = new HttpClient();
 
-
 		HttpMethodWrapper httpMethod = HttpMethod.GET.getHttpMethod(uri);
 
 		int resultCode = httpMethod.executeMethod(client);
-
 		String response = httpMethod.getResponseBodyAsString();
 
-		JSONWriter json = new JSONWriter(this.response.getWriter()).object();
+		JSONWriter json = getWriter(response, resultCode);
 
 		json.key("response").value(response);
 		json.key("responseCode").value(resultCode);
 		json.key("uri").value(uri);
 		json.endObject();
-		result.use(Results.nothing());
 	}
+	
+	private JSONWriter getWriter() {
+		result.use(Results.nothing());
+		return new JSONWriter(this.response.getWriter()).object();
+	}
+	
 }
