@@ -1,10 +1,12 @@
 package br.com.caelum.rest.client.http;
 
+import org.apache.commons.httpclient.methods.PostMethod;
+
 public enum HttpMethod {
 	POST {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return null;
+			return new PostMethodWrapper(new PostMethod(uri));
 		}
 	},
 	PUT {

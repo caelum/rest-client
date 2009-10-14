@@ -44,15 +44,17 @@ public class IndexController {
 
 		String response = httpMethod.getResponseBodyAsString();
 
-		JSONWriter main = new JSONWriter(this.response.getWriter()).object();
+		JSONWriter json = new JSONWriter(this.response.getWriter()).object();
 
-		main.key("response").value(response);
-		main.key("responseCode").value(resultCode);
+		json.key("response").value(response);
+		json.key("responseCode").value(resultCode);
+		json.key("method").value(method);
+		json.key("uri").value(uri);
 		if (resultCode == 201) {
 			String location = httpMethod.getResponseHeader("location").getValue();
-			main.key("location").value(location);
+			json.key("location").value(location);
 		}
-		main.endObject();
+		json.endObject();
 		result.use(Results.nothing());
 	}
 }

@@ -10,10 +10,10 @@
 				function callbackCriado(uri) {
 					console.log(uri);
 					return function(data, textStatus){
-						$('#activities').append('<tr><td>' + data.method + '</td>'+
-								+'<td>' + data.uri + '</td>'+
-								+'<td>'+ data.responseCode +'</td>'+
-								+'<td><a href="' + data.location +'" target="_blank">' + data.location + '</a></td></tr>');
+						$('#activities').append('<tr><td>' + data.method + '</td>\
+								<td>' + data.uri + '</td>\
+								<td>' + data.responseCode + '</td>\
+								<td><a href="' + data.location +'" target="_blank">' + data.location + '</a></td></tr>');
 					};
 				}
 				function cria() {
@@ -26,7 +26,7 @@
 			<form action="" method="post" id="form" >
 			URI: <input type="text" name="uri" id="uri" style="width: 400px;"/>
 				<br />
-				<select name="method">
+				HTTP Method: <select name="method">
 					<option value="POST">POST</option>
 					<option value="GET">GET</option>
 					<option value="PUT">PUT</option>
