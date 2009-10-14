@@ -4,10 +4,21 @@
 		<link rel="stylesheet" type="text/css" href="/rest-client/css/styles.css">
 	</head>
 	<body>
+		<div>
+			<a href="javascript:showCreation(); return false;">Creation</a> | <a href="javascript:showView(); return false;">View</a>
+		</div>
 		<div id="left">
 			<div id="creation">
 			<h2>Resource Creation</h2>
 			<script type="text/javascript">
+				function showCreation() {
+					$('#creation').show();
+					$('#view').hide();
+				}
+				function showView() {
+					$('#creation').hide();
+					$('#view').show();
+				}
 				function callbackCriado(uri) {
 					console.log(uri);
 					return function(result, status){
