@@ -40,7 +40,7 @@ public class OrderController {
 		long novoId = orders.size() + 1;
 		orders.put(novoId, order);
 		result.include("order", order);
-		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", "order/" + novoId);
+		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", "/rest-server/order/" + novoId);
 	}
 
 	@Path("/order/{id}")
