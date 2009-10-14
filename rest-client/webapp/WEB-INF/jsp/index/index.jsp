@@ -5,6 +5,7 @@
 	</head>
 	<body>
 		<div id="left">
+			<div id="creation">
 			<h2>Resource Creation</h2>
 			<script type="text/javascript">
 				function callbackCriado(uri) {
@@ -13,7 +14,7 @@
 						$('#activities').append('<tr><td>' + result.method + '</td>\
 								<td>' + result.uri + '</td>\
 								<td>' + result.responseCode + '</td>\
-								<td><a href="' + result.location +'" target="_blank">' + result.location + '</a></td></tr>');
+								<td><a href="javascript:view(' + result.location + '); return false;">' + result.location + '</a></td></tr>');
 					};
 				}
 				function cria() {
@@ -21,6 +22,11 @@
 					$.getJSON('createSomething', $('#form').serialize(),
 						callbackCriado(uri)
 					);
+				}
+				function view(uri) {
+					$('#creation').hide();
+					$('#view').show();
+					$('#view').load(uri);
 				}
 			</script>
 			<form action="" method="post" id="form" >
@@ -41,6 +47,9 @@
 				
 				<input type="button" value="Send"  onclick="cria()">
 			</form>
+			</div>
+			<div id="view" style="display: none;">
+			</div>
 		</div>
 		<div id="right">
 			<h2>Activity History</h2>
