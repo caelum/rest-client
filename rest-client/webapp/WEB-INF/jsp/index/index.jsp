@@ -38,7 +38,6 @@
 					$('#creation').hide();
 					$('#view').show();
 					$('#view').html('Loading...');
-					var uri = $('#uri').val();
 					$.getJSON('grab', { "uri" : uri},
 						function(result, status){
 							$('#view').html(result);

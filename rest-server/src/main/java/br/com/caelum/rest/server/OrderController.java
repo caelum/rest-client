@@ -40,7 +40,9 @@ public class OrderController {
 		long novoId = orders.size() + 1;
 		orders.put(novoId, order);
 		result.include("order", order);
-		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", "/rest-server/order/" + novoId);
+
+		// TODO - the location URI must be absolute... change it to at least not being hard coded
+		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", "http://localhost:8080/rest-server/order/" + novoId);
 	}
 
 	@Path("/order/{id}")
