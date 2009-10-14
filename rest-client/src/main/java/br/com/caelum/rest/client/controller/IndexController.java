@@ -65,17 +65,17 @@ public class IndexController {
 		int resultCode = httpMethod.executeMethod(client);
 		String response = httpMethod.getResponseBodyAsString();
 
-		JSONWriter json = getWriter(response, resultCode);
+		JSONWriter json = getWriter();
 
 		json.key("response").value(response);
 		json.key("responseCode").value(resultCode);
 		json.key("uri").value(uri);
 		json.endObject();
 	}
-	
-	private JSONWriter getWriter() {
+
+	private JSONWriter getWriter() throws JSONException, IOException {
 		result.use(Results.nothing());
 		return new JSONWriter(this.response.getWriter()).object();
 	}
-	
+
 }
