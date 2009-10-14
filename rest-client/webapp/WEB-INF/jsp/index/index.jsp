@@ -10,12 +10,15 @@
 				function callbackCriado(uri) {
 					console.log(uri);
 					return function(data, textStatus){
-						alert(data.location);
+						$('#activities').append('<tr><td>' + data.method + '</td>'+
+								+'<td>' + data.uri + '</td>'+
+								+'<td>'+ data.responseCode +'</td>'+
+								+'<td><a href="' + data.location +'" target="_blank">' + data.location + '</a></td></tr>');
 					};
 				}
 				function cria() {
 					var uri = $('#uri').val();
-					$.getJSON("createSomething", $('#form').serialize(),
+					$.getJSON('createSomething', $('#form').serialize(),
 						callbackCriado(uri)
 					);
 				}
@@ -33,6 +36,17 @@
 		</div>
 		<div id="right">
 			<h2>Activity History</h2>
+			<table width="100%">
+				<thead>
+					<th>Method</th>
+					<th>URI</th>
+					<th>Response code</th>
+					<th>Location</th>
+				</thead>
+				<tbody id="activities">
+					
+				</tbody>
+			</table>
 		</div>
 	</body>
 </html>
