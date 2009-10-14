@@ -37,7 +37,13 @@
 				function view(uri) {
 					$('#creation').hide();
 					$('#view').show();
-					$('#view').load(uri);
+					$('#view').html('Loading...');
+					var uri = $('#uri').val();
+					$.getJSON('grab', { "uri" : uri},
+						function(result, status){
+							$('#view').html(result);
+						}
+					);
 				}
 			</script>
 			<form action="" method="post" id="form" >
