@@ -1,5 +1,6 @@
 package br.com.caelum.rest.client.http;
 
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 public enum HttpMethod {
@@ -18,7 +19,7 @@ public enum HttpMethod {
 	GET {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return null;
+			return new GetMethodWrapper(new GetMethod(uri));
 		}
 	},
 	DELETE {
