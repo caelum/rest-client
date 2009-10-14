@@ -40,7 +40,7 @@
 					$('#view').html('Loading...');
 					$.getJSON('grab', { "uri" : uri},
 						function(result, status){
-							$('#view').html(result);
+							$('#view').html(result.response);
 						}
 					);
 				}
