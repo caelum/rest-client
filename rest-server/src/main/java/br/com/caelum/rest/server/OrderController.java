@@ -33,7 +33,7 @@ public class OrderController {
 
 		String order = orders.get(id);
 		String uri = route.urlFor(OrderController.class, OrderController.class.getMethod("removeOrder", Long.class), new Object[] {id});
-		order += "\n<atom:link rel=\"cancel\" href=\"" + uri + "\" />";
+		order += "\n<atom:link rel=\"cancel\" href=\"http://localhost:8080/rest-server" + uri + "\" />";
 		result.include("order", order);
 		if(order == null) {
 			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);
