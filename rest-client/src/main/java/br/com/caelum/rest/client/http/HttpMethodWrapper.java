@@ -13,5 +13,5 @@ public interface HttpMethodWrapper {
 
 	String getResponseBodyAsString() throws IOException;
 
-	Header getResponseHeader(String string);
+	Header getResponseHeader(String header);
 }

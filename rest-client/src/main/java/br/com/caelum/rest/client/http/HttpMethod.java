@@ -1,5 +1,6 @@
 package br.com.caelum.rest.client.http;
 
+import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
@@ -25,7 +26,7 @@ public enum HttpMethod {
 	DELETE {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return null;
+			return new DeleteMethodWrapper(new DeleteMethod(uri));
 		}
 	},
 	OPTIONS {

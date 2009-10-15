@@ -27,6 +27,7 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {
+		result.include("methods", HttpMethod.values());
 	}
 
 	public IndexController(HttpServletResponse response, Result result, ActivityInfo info) {
@@ -112,4 +113,19 @@ public class IndexController {
 		return new JSONWriter(this.response.getWriter()).object();
 	}
 
+	@Get
+	@Path("/navigate")
+	public void navigate(HttpMethod method, String href, String rel) throws JSONException, IOException {
+		HttpClient client = new HttpClient();
+		HttpMethodWrapper httpMethod = method.getHttpMethod(href);
+
+		int resultCode = httpMethod.executeMethod(client);
+		String response = httpMethod.getResponseBodyAsString();
+
+		JSONWriter json = getWriter();
+
+		json.key("resultCode").value(resultCode);
+		json.key("response").value(response);
+		json.endObject();
+	}
 }

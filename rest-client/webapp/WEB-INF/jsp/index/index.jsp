@@ -45,12 +45,26 @@
 							$('#view').html(result.response);
 
 							$.each(result.links, function() {
-								$('#view').append('<br />Link: ' + this.href + ' - ' + this.rel);
+								$('#view').append('<br /><form id="formNavigate'+ this.rel +'">\
+										<input type="hidden" name="href" value="'+ this.href +'"/>Link: ' + this.href + '\
+										<input type="hidden" name="rel" value="' + this.rel + '"/>\
+										<select name="method" id="method">\
+										<c:forEach items="${methods}" var="method">\
+											<option value="${method}">${method}</option>\
+										</c:forEach>\
+										</select>\
+										<input type="button" value="' + this.rel + '" onclick="navigate(\''+ this.rel +'\')">');
 							});
 						}
 					);
 				}
 
+				function navigate(rel) {
+					$.getJSON('navigate', $('#formNavigate' + rel).serialize(), function(result) {
+						console.log(result);
+					});	
+				}
+				
 				function cleanUpActivities() {
 					$.post('cleanUpActivities', function() {
 						$('#activities').empty();
@@ -60,11 +74,9 @@
 			<form action="" method="post" id="form" >
 			<p><label for="uri">URI:</label><input type="text" name="uri" id="uri" style="width: 400px;"/></p>
 			<p><label for="method">Method:</label><select name="method" id="method">
-					<option value="POST">POST</option>
-					<option value="GET">GET</option>
-					<option value="PUT">PUT</option>
-					<option value="DELETE">DELETE</option>
-					<option value="OPTIONS">OPTIONS</option>
+				<c:forEach items="${methods}" var="method">
+					<option value="${method}">${method}</option>
+				</c:forEach>
 				</select></p>
 				<p><label for="contentName">Name:</label><input type="text" name="contentName" id="contentName"></p>
 				<p><label for="contentValue">Value:</label><textarea id="contentValue" name="contentValue" style="width: 400px"></textarea></p>
