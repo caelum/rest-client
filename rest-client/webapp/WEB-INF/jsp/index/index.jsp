@@ -24,12 +24,17 @@
 					console.log(uri);
 					return function(result){
 						console.log(result);
-						$('#activities').append('<tr><td>' + result.method + '</td>\
-								<td>' + result.uri + '</td>\
-								<td>' + result.responseCode + '</td>\
-								<td><a href="#" onclick="view(\'' + result.location + '\')">' + result.location + '</a></td></tr>');
+						logActivity(result.method, result.uri, result.responseCode, result.location);
 					};
 				}
+
+				function logActivity(method, uri, responseCode, location) {
+					$('#activities').append('<tr><td>' + method + '</td>\
+							<td>' + uri + '</td>\
+							<td>' + responseCode + '</td>\
+							<td><a href="#" onclick="view(\'' + location + '\')">' + location + '</a></td></tr>');
+				}
+				
 				function cria() {
 					var uri = $('#uri').val();
 					$.getJSON('createSomething', $('#form').serialize(),
@@ -46,14 +51,14 @@
 
 							$.each(result.links, function() {
 								$('#view').append('<br /><form id="formNavigate'+ this.rel +'">\
-										<input type="hidden" name="href" value="'+ this.href +'"/>Link: ' + this.href + '\
-										<input type="hidden" name="rel" value="' + this.rel + '"/>\
-										<select name="method" id="method">\
-										<c:forEach items="${methods}" var="method">\
-											<option value="${method}">${method}</option>\
-										</c:forEach>\
-										</select>\
-										<input type="button" value="' + this.rel + '" onclick="navigate(\''+ this.rel +'\')">');
+									<input type="hidden" name="href" value="'+ this.href +'"/>Link: ' + this.href + '\
+									<input type="hidden" name="rel" value="' + this.rel + '"/>\
+									<select name="method" id="method">\
+									<c:forEach items="${methods}" var="method">\
+										<option value="${method}">${method}</option>\
+									</c:forEach>\
+									</select>\
+									<input type="button" value="' + this.rel + '" onclick="navigate(\''+ this.rel +'\')">');
 							});
 						}
 					);
@@ -61,7 +66,7 @@
 
 				function navigate(rel) {
 					$.getJSON('navigate', $('#formNavigate' + rel).serialize(), function(result) {
-						console.log(result);
+						logActivity(result.method, result.uri, result.responseCode, '');
 					});	
 				}
 				
@@ -92,10 +97,12 @@
 			<input type="button" value="CleanUp activities" onclick="cleanUpActivities()" />
 			<table width="100%">
 				<thead>
-					<th>Method</th>
-					<th>URI</th>
-					<th>Response code</th>
-					<th>Location</th>
+					<tr>
+						<th>Method</th>
+						<th>URI</th>
+						<th>Response code</th>
+						<th>Location</th>
+					</tr>
 				</thead>
 				<tbody id="activities">
 					<c:forEach items="${activities}" var="activity">

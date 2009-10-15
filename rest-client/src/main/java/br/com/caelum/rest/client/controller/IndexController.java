@@ -124,8 +124,10 @@ public class IndexController {
 
 		JSONWriter json = getWriter();
 
-		json.key("resultCode").value(resultCode);
+		json.key("responseCode").value(resultCode);
 		json.key("response").value(response);
+		json.key("uri").value(href);
+		json.key("method").value(method);
 		json.endObject();
 	}
 }
