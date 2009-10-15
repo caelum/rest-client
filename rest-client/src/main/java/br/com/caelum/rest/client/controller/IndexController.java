@@ -8,6 +8,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.json.JSONException;
 import org.json.JSONWriter;
 
+import br.com.caelum.rest.client.Activity;
+import br.com.caelum.rest.client.ActivityInfo;
 import br.com.caelum.rest.client.http.HttpMethod;
 import br.com.caelum.rest.client.http.HttpMethodWrapper;
 import br.com.caelum.vraptor.Get;
@@ -21,14 +23,16 @@ public class IndexController {
 
 	private final HttpServletResponse response;
 	private final Result result;
+	private final ActivityInfo info;
 
 	@Path("/")
 	public void index() {
 	}
 
-	public IndexController(HttpServletResponse response, Result result) {
+	public IndexController(HttpServletResponse response, Result result, ActivityInfo info) {
 		this.response = response;
 		this.result = result;
+		this.info = info;
 	}
 
 	@Path("/createSomething")
@@ -48,11 +52,20 @@ public class IndexController {
 		json.key("responseCode").value(resultCode);
 		json.key("method").value(method);
 		json.key("uri").value(uri);
+		String location = retrieveLocationHeader(httpMethod, resultCode, json);
+		json.endObject();
+
+		info.addActivity(new Activity(method, uri, resultCode, location));
+	}
+
+	private String retrieveLocationHeader(HttpMethodWrapper httpMethod, int resultCode, JSONWriter json)
+			throws JSONException {
+		String location = "";
 		if (resultCode == 201) {
-			String location = httpMethod.getResponseHeader("location").getValue();
+			location = httpMethod.getResponseHeader("location").getValue();
 			json.key("location").value(location);
 		}
-		json.endObject();
+		return location;
 	}
 
 	@Path("/grab")
