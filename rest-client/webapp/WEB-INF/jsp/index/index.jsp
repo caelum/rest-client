@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <html>
 	<head>
 		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
@@ -49,6 +50,12 @@
 						}
 					);
 				}
+
+				function cleanUpActivities() {
+					$.post('cleanUpActivities', function() {
+						$('#activities').empty();
+					});
+				}
 			</script>
 			<form action="" method="post" id="form" >
 			<p><label for="uri">URI:</label><input type="text" name="uri" id="uri" style="width: 400px;"/></p>
@@ -70,6 +77,7 @@
 		</div>
 		<div id="right">
 			<h2>Activity History</h2>
+			<input type="button" value="CleanUp activities" onclick="cleanUpActivities()" />
 			<table width="100%">
 				<thead>
 					<th>Method</th>
@@ -78,7 +86,14 @@
 					<th>Location</th>
 				</thead>
 				<tbody id="activities">
-					
+					<c:forEach items="${activities}" var="activity">
+						<tr>
+							<td>${activity.method}</td>
+							<td>${activity.uri }</td>
+							<td>${activity.responseCode}</td>
+							<td><a href="#" onclick="view('${activity.location}')">${activity.location}</a></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>

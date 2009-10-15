@@ -52,18 +52,17 @@ public class IndexController {
 		json.key("responseCode").value(resultCode);
 		json.key("method").value(method);
 		json.key("uri").value(uri);
-		String location = retrieveLocationHeader(httpMethod, resultCode, json);
+		String location = retrieveLocationHeader(httpMethod, resultCode);
+		json.key("location").value(location);
 		json.endObject();
 
 		info.addActivity(new Activity(method, uri, resultCode, location));
 	}
 
-	private String retrieveLocationHeader(HttpMethodWrapper httpMethod, int resultCode, JSONWriter json)
-			throws JSONException {
+	private String retrieveLocationHeader(HttpMethodWrapper httpMethod, int resultCode) {
 		String location = "";
 		if (resultCode == 201) {
 			location = httpMethod.getResponseHeader("location").getValue();
-			json.key("location").value(location);
 		}
 		return location;
 	}

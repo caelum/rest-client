@@ -12,7 +12,7 @@ import br.com.caelum.vraptor.ioc.SessionScoped;
 @SessionScoped
 public class ActivityInfo {
 	private final HttpSession session;
-	private final List<Activity> activities;
+	private List<Activity> activities;
 
 	public ActivityInfo(HttpSession session) {
 		this.session = session;
@@ -21,6 +21,11 @@ public class ActivityInfo {
 
 	public void addActivity(Activity activity) {
 		activities.add(activity);
+		session.setAttribute("activities", activities);
+	}
+
+	public void cleanUpActivities() {
+		activities = new ArrayList<Activity>();
 		session.setAttribute("activities", activities);
 	}
 }
