@@ -1,3 +1,7 @@
 .class
 classes
 .log
+.classpath
+.settings
+target
+.DS_Store
