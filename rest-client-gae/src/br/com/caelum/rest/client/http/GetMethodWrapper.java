@@ -22,7 +22,6 @@ public class GetMethodWrapper implements HttpMethodWrapper {
 		params.setParameter(parameterName, parameterValue);
 	}
 
-	@Override
 	public int executeMethod(HttpClient client) throws HttpException {
 		method.setParams(params);
 		try {
@@ -33,12 +32,10 @@ public class GetMethodWrapper implements HttpMethodWrapper {
 		}
 	}
 
-	@Override
 	public String getResponseBodyAsString() throws IOException {
 		return method.getResponseBodyAsString();
 	}
 
-	@Override
 	public Header getResponseHeader(String headerName) {
 		return method.getResponseHeader(headerName);
 	}

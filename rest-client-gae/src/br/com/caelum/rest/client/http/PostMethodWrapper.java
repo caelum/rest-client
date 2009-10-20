@@ -19,7 +19,6 @@ public class PostMethodWrapper implements HttpMethodWrapper {
 		method.addParameter(parameterName, parameterValue);
 	}
 
-	@Override
 	public int executeMethod(HttpClient client) throws HttpException {
 		try {
 			return client.executeMethod(method);
@@ -29,12 +28,10 @@ public class PostMethodWrapper implements HttpMethodWrapper {
 		}
 	}
 
-	@Override
 	public String getResponseBodyAsString() throws IOException {
 		return method.getResponseBodyAsString();
 	}
 
-	@Override
 	public Header getResponseHeader(String headerName) {
 		return method.getResponseHeader(headerName);
 	}

@@ -15,12 +15,10 @@ public class DeleteMethodWrapper implements HttpMethodWrapper {
 		this.method = deleteMethod;
 	}
 
-	@Override
 	public void addParameter(String parameterName, String parameterValue) {
 
 	}
 
-	@Override
 	public int executeMethod(HttpClient client) throws HttpException {
 		try {
 			return client.executeMethod(method);
@@ -29,12 +27,10 @@ public class DeleteMethodWrapper implements HttpMethodWrapper {
 		}
 	}
 
-	@Override
 	public String getResponseBodyAsString() throws IOException {
 		return method.getResponseBodyAsString();
 	}
 
-	@Override
 	public Header getResponseHeader(String headerName) {
 		return method.getResponseHeader(headerName);
 	}
