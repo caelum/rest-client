@@ -14,7 +14,7 @@ public class LinkAsAtom implements Linker {
 	public <T extends Restful> String to(T object) {
 		String content = "";
 		for(Action action : object.getActions(builder)) {
-			content += "<atom:link rel=\"" + action.getRel() + "\" href=\"" + action.getUri() + "\" />";
+			content += "<atom:link rel=\"" + action.getRel() + "\" href=\"" + action.getUri() + "\" />\n";
 		}
 		return content;
 	}

@@ -30,6 +30,7 @@ public class Order implements Restful {
 	public List<Action> getActions(ActionBuilder builder) {
 		if(status.equals(Status.WAITING_FOR_PAYMENT)) {
 			builder.use(OrderController.class).cancel(id);
+			builder.use(OrderController.class).updateOrder(id, "");
 			// actions.add(new SimpleAction("cancel", "http://localhost:8080/order/" + id));
 			//builder.to("cancel").use(OrderController.class).cancel(id);
 			// builder.allFor(OrderController.class);

@@ -14,7 +14,7 @@ public class LinkAsRel implements Linker{
 	public <T extends Restful> String to(T object) {
 		String content = "";
 		for(Action action : object.getActions(builder)) {
-			content += "<" + action.getRel() + ">" + action.getUri() + "</" + action.getRel() + ">";
+			content += "<" + action.getRel() + ">" + action.getUri() + "</" + action.getRel() + ">\n";
 		}
 		return content;
 	}
