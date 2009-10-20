@@ -28,17 +28,17 @@ public class OrderController {
 		this.request = request;
 	}
 
-	private static Map<Long, String> orders = new HashMap<Long, String>();
+	private static Map<Long, Order> orders = new HashMap<Long, Order>();
 
 	@Path("/order/{id}")
 	@Get
 	public void getOrder(Long id) throws SecurityException, NoSuchMethodException {
 
-		String order = orders.get(id);
+		Order order = orders.get(id);
 		String uri = route.urlFor(OrderController.class, OrderController.class.getMethod("removeOrder", Long.class), new Object[] {id});
 		String location = getLocationFor(uri);
-		order += "\n<atom:link rel=\"cancel\" href=\"" + location + "\" />";
-		result.include("order", order);
+		String resultContent = order.getContent() + "\n<atom:link rel=\"cancel\" href=\"" + location + "\" />";
+		result.include("order", resultContent);
 		if(order == null) {
 			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);
 		}
@@ -46,10 +46,10 @@ public class OrderController {
 
 	@Path("/order")
 	@Post
-	public void createOrder(String order) {
+	public void createOrder(String content) {
 		long novoId = orders.size() + 1;
-		orders.put(novoId, order);
-		result.include("order", order);
+		orders.put(novoId, new Order(novoId, content));
+		result.include("order", content);
 
 		// TODO - the location URI must be absolute... change it to at least not being hard coded
 		String location = getLocationFor("/order/" + novoId);
@@ -62,17 +62,19 @@ public class OrderController {
 
 	@Path("/order/{id}")
 	@Delete
-	public void removeOrder(Long id) {
-		String removedOrder = orders.remove(id);
-		if( removedOrder == null) {
+	public void cancel(Long id) {
+		Order order = orders.remove(id);
+		if( order == null) {
 			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);
+		} else {
+			order.cancel();
 		}
 	}
 
 	@Path("/order/{id}")
 	@Post
-	public void updateOrder(Long id, String order) {
-		orders.put(id, order);
-		result.include("order", order);
+	public void updateOrder(Long id, String content) {
+		orders.put(id, new Order(id, content));
+		result.include("order", content);
 	}
 }
