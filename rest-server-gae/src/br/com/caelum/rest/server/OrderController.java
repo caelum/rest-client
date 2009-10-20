@@ -3,6 +3,7 @@ package br.com.caelum.rest.server;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.caelum.vraptor.Delete;
@@ -19,10 +20,12 @@ public class OrderController {
 
 	private final Result result;
 	private final Router route;
+	private final HttpServletRequest request;
 
-	public OrderController(Result result, Router route) {
+	public OrderController(Result result, Router route, HttpServletRequest request) {
 		this.result = result;
 		this.route = route;
+		this.request = request;
 	}
 
 	private static Map<Long, String> orders = new HashMap<Long, String>();
@@ -33,7 +36,8 @@ public class OrderController {
 
 		String order = orders.get(id);
 		String uri = route.urlFor(OrderController.class, OrderController.class.getMethod("removeOrder", Long.class), new Object[] {id});
-		order += "\n<atom:link rel=\"cancel\" href=\"http://localhost:8080/rest-server" + uri + "\" />";
+		String location = getLocationFor(uri);
+		order += "\n<atom:link rel=\"cancel\" href=\"" + location + "\" />";
 		result.include("order", order);
 		if(order == null) {
 			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);
@@ -48,7 +52,12 @@ public class OrderController {
 		result.include("order", order);
 
 		// TODO - the location URI must be absolute... change it to at least not being hard coded
-		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", "http://localhost:8080/rest-server/order/" + novoId);
+		String location = getLocationFor("/order/" + novoId);
+		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", location);
+	}
+
+	private String getLocationFor(String val) {
+		return "http://" + request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + val;
 	}
 
 	@Path("/order/{id}")

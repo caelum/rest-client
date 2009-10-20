@@ -1,8 +1,9 @@
+<%@ page isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <html>
 	<head>
 		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="/rest-client/css/styles.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
 	</head>
 	<body>
 		<div>
@@ -47,17 +48,17 @@
 					$('#view').html('Loading...');
 					$.getJSON('grab', { "uri" : uri},
 						function(result){
-							$('#view').html(result.response);
+							$('#view').html('').append($('<pre></pre>').text(result.response));
 
 							$.each(result.links, function() {
 								$('#view').append('<br /><form id="formNavigate'+ this.rel +'">\
-									<input type="hidden" name="href" value="'+ this.href +'"/>Link: ' + this.href + '\
+									<input type="hidden" name="href" value="'+ this.href +'"/>Execute a \
 									<input type="hidden" name="rel" value="' + this.rel + '"/>\
 									<select name="method" id="method">\
 									<c:forEach items="${methods}" var="method">\
 										<option value="${method}">${method}</option>\
 									</c:forEach>\
-									</select>\
+									</select> in order to \
 									<input type="button" value="' + this.rel + '" onclick="navigate(\''+ this.rel +'\')">');
 							});
 						}
