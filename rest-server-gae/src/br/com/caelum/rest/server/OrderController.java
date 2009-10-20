@@ -61,11 +61,12 @@ public class OrderController {
 	@Path("/order/{id}")
 	@Delete
 	public void cancel(Long id) {
-		Order order = orders.remove(id);
+		Order order = orders.get(id);
 		if( order == null) {
 			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);
 		} else {
 			order.cancel();
+			result.use(Results.nothing());
 		}
 	}
 

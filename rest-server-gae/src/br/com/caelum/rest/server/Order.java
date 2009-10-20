@@ -39,7 +39,7 @@ public class Order implements Restful {
 	
 	
 	public String toXml(Linker linker) {
-		return "<order>\n" + "<id>" + id + "</id>\n" + linker.to(this) + "\n</order>";
+		return "<order>\n" + "<id>" + id + "</id>\n" + "<status>" + status.name() + "</status>\n" + linker.to(this) + "\n</order>";
 	}
 
 }
