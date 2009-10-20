@@ -1,0 +1,26 @@
+#right {
+	width: 48%;
+	float: right;
+	border: black 1px solid;
+	padding: 5px 5px 5px 5px;
+	text-align: center;
+}
+
+#left {
+	width: 48%;
+	float: left;
+	border: black 1px solid;
+	padding: 5px 5px 5px 5px;
+}
+
+label {
+	width: 4em;
+	float: left;
+	text-align: right;
+	margin-right: 0.5em;
+	display: block
+}
+
+.submit input {
+	margin-left: 4.5em;
+}
