@@ -1,0 +1,18 @@
+README
+======
+
+
+This project is a small example (and base for vraptor 3 - restful support) for restful services in the meaning that a restful service is only a restful service if it provides a way to work with hypercontent.
+
+
+TEAM
+====
+
+So far Adriano Almeida and Guilherme Silveira are working on this project.
+
+
+
+
+
+Copyright (c) 2009 Caelum, released under the MIT license
+
