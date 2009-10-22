@@ -14,6 +14,8 @@ b) method: POST
 c) name: content
 d) content: any order content (it will not be validated)
 
+PAY ATTENTION: you might need to run it twice when you first run it. google app engine has a slow startup time that might run a timeout prior to succeeding.
+
 After posting the order, you will receive a 201 response with your order location.
 
 You can then view (GET) this order to see its representation. By parsing the representation, one can discover
