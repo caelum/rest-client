@@ -104,7 +104,7 @@
 					</tr>
 				</thead>
 				<tbody id="activities">
-					<c:forEach items="${activities}" var="activity">
+					<c:forEach items="${activities.activities}" var="activity">
 						<tr>
 							<td>${activity.method}</td>
 							<td>${activity.uri }</td>
