@@ -22,7 +22,9 @@ public class SimpleAction implements Action {
 	
 	public SimpleAction(String rel, HttpServletRequest request, String uri) {
 		this.rel = rel;
-		this.uri = "http://" + request.getLocalAddr() + ":" + request.getLocalPort() + request.getContextPath() + uri;
+		this.uri  = "http://restful-server.appspot.com" + uri;
+		// this.uri = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + uri;
+		
 	}
 
 }

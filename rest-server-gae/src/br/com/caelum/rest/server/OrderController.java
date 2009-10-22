@@ -34,7 +34,7 @@ public class OrderController {
 
 	@Path("/order/{id}")
 	@Get
-	public void getOrder(Long id) throws SecurityException, NoSuchMethodException {
+	public void view(Long id) {
 
 		Order order = orders.get(id);
 		
@@ -69,6 +69,18 @@ public class OrderController {
 			result.use(Results.nothing());
 		}
 	}
+	
+	@Path("/order/{id}/pay")
+	@Post
+	public void pay(Long id) {
+		Order order = orders.get(id);
+		if( order == null) {
+			result.use(Results.http()).setStatusCode(HttpServletResponse.SC_NOT_FOUND);
+		} else {
+			order.pay();
+			result.use(Results.nothing());
+		}
+	}
 
 	@Path("/order/{id}")
 	@Post
@@ -78,6 +90,7 @@ public class OrderController {
 	}
 	
 	private String getLocationFor(String uri) {
-		return "http://" + request.getLocalAddr() + ":" + request.getLocalPort() + request.getContextPath() + uri;
+		return "http://restful-server.appspot.com/" + uri;
+		// return "http://" + request.getLocalAddr() + ":" + request.getLocalPort() + request.getContextPath() + uri;
 	}
 }
