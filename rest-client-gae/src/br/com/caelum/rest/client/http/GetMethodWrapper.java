@@ -1,42 +1,52 @@
 package br.com.caelum.rest.client.http;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.HttpException;
+import org.apache.http.client.HttpClient;
 
 public class GetMethodWrapper implements HttpMethodWrapper {
 
-	private final GetMethod method;
-	private final HttpMethodParams params;
+	private Response response;
+	private String uri;
 
-	public GetMethodWrapper(GetMethod method) {
-		this.method = method;
-		params = new HttpMethodParams();
+	public GetMethodWrapper(String uri) {
+		this.uri = uri + "?";
 	}
 
 	public void addParameter(String parameterName, String parameterValue) {
-		params.setParameter(parameterName, parameterValue);
+		uri += parameterName + "=" + parameterValue + "&";
 	}
 
 	public int executeMethod(HttpClient client) throws HttpException {
-		method.setParams(params);
-		try {
-			return client.executeMethod(method);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new HttpException("The HTTP request failed, check the stack trace for more details", e);
-		}
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(false);
+            connection.setRequestMethod("GET");
+
+            this.response = new Response(connection);
+            return response.getCode();
+
+        } catch (MalformedURLException e) {
+        	throw new HttpException(e.getMessage(),e);
+        } catch (IOException e) {
+        	throw new HttpException(e.getMessage(),e);
+        }
 	}
 
-	public String getResponseBodyAsString() throws IOException {
-		return method.getResponseBodyAsString();
+	private String getFullUri() {
+		return uri;
 	}
 
-	public Header getResponseHeader(String headerName) {
-		return method.getResponseHeader(headerName);
+	public String getResponseBodyAsString() throws IOException{ 
+		 return response.getContent();
+	}
+
+	public String getResponseHeader(String headerName) {
+		return response.getHeader(headerName).get(0);
 	}
 }

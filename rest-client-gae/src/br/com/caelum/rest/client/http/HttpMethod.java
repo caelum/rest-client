@@ -1,14 +1,11 @@
 package br.com.caelum.rest.client.http;
 
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
 
 public enum HttpMethod {
 	POST {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return new PostMethodWrapper(new PostMethod(uri));
+			return new PostMethodWrapper(uri);
 		}
 	},
 	PUT {
@@ -20,13 +17,13 @@ public enum HttpMethod {
 	GET {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return new GetMethodWrapper(new GetMethod(uri));
+			return new GetMethodWrapper((uri));
 		}
 	},
 	DELETE {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return new DeleteMethodWrapper(new DeleteMethod(uri));
+			return new DeleteMethodWrapper((uri));
 		}
 	},
 	OPTIONS {

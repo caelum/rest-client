@@ -2,9 +2,9 @@ package br.com.caelum.rest.client.http;
 
 import java.io.IOException;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
+import org.apache.http.Header;
+import org.apache.http.HttpException;
+import org.apache.http.client.HttpClient;
 
 public interface HttpMethodWrapper {
 	void addParameter(String parameterName, String parameterValue);
@@ -13,5 +13,5 @@ public interface HttpMethodWrapper {
 
 	String getResponseBodyAsString() throws IOException;
 
-	Header getResponseHeader(String header);
+	String getResponseHeader(String header);
 }

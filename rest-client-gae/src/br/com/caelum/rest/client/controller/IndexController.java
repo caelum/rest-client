@@ -4,7 +4,14 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
+import org.apache.http.HttpException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.params.BasicHttpParams;
 import org.json.JSONException;
 import org.json.JSONWriter;
 
@@ -36,11 +43,21 @@ public class IndexController {
 		this.result = result;
 		this.info = info;
 	}
+	
+	private HttpClient getClient() {
+		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		schemeRegistry.register(
+		  new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		BasicHttpParams params = new BasicHttpParams();
+		SingleClientConnManager connmgr = 
+		  new SingleClientConnManager(params, schemeRegistry);
+		return new DefaultHttpClient(connmgr, params);
+	}
 
 	@Path("/createSomething")
 	@Get
-	public void createSomething(HttpMethod method, String uri, String contentName, String contentValue) throws JSONException, IOException {
-		HttpClient client = new HttpClient();
+	public void createSomething(HttpMethod method, String uri, String contentName, String contentValue) throws JSONException, IOException, HttpException {
+		HttpClient client = getClient();
 
 		HttpMethodWrapper httpMethod = method.getHttpMethod(uri);
 
@@ -64,15 +81,15 @@ public class IndexController {
 	private String retrieveLocationHeader(HttpMethodWrapper httpMethod, int resultCode) {
 		String location = "";
 		if (resultCode == 201) {
-			location = httpMethod.getResponseHeader("location").getValue();
+			location = httpMethod.getResponseHeader("location");
 		}
 		return location;
 	}
 
 	@Path("/grab")
 	@Get
-	public void grab(String uri) throws JSONException, IOException {
-		HttpClient client = new HttpClient();
+	public void grab(String uri) throws JSONException, IOException, HttpException {
+		HttpClient client = getClient();
 
 		HttpMethodWrapper httpMethod = HttpMethod.GET.getHttpMethod(uri);
 
@@ -116,8 +133,8 @@ public class IndexController {
 
 	@Get
 	@Path("/navigate")
-	public void navigate(HttpMethod method, String href, String rel) throws JSONException, IOException {
-		HttpClient client = new HttpClient();
+	public void navigate(HttpMethod method, String href, String rel) throws JSONException, IOException, HttpException {
+		HttpClient client = getClient();
 		HttpMethodWrapper httpMethod = method.getHttpMethod(href);
 
 		int resultCode = httpMethod.executeMethod(client);
