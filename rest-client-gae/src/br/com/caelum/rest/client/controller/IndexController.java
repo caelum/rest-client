@@ -27,6 +27,7 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {
+		result.include("activities", info);
 		result.include("methods", HttpMethod.values());
 	}
 
