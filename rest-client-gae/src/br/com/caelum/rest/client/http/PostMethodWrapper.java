@@ -30,7 +30,7 @@ public class PostMethodWrapper implements HttpMethodWrapper {
         try {
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(false);
+            connection.setDoOutput(true);
             connection.setRequestMethod("POST");
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             for(String key : params.keySet()) {
