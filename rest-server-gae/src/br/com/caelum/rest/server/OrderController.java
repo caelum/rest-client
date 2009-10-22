@@ -53,7 +53,6 @@ public class OrderController {
 		orders.put(novoId, new Order(novoId, content));
 		result.include("order", content);
 
-		// TODO - the location URI must be absolute... change it to at least not being hard coded
 		String location = getLocationFor("/order/" + novoId);
 		result.use(Results.http()).setStatusCode(HttpServletResponse.SC_CREATED).addHeader("location", location);
 	}
@@ -90,7 +89,7 @@ public class OrderController {
 	}
 	
 	private String getLocationFor(String uri) {
-		return "http://restful-server.appspot.com/" + uri;
+		return "http://restful-server.appspot.com" + uri;
 		// return "http://" + request.getLocalAddr() + ":" + request.getLocalPort() + request.getContextPath() + uri;
 	}
 }

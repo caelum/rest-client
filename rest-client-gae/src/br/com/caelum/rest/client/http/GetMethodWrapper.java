@@ -5,9 +5,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.http.HttpException;
-import org.apache.http.client.HttpClient;
-
 public class GetMethodWrapper implements HttpMethodWrapper {
 
 	private Response response;
@@ -21,8 +18,7 @@ public class GetMethodWrapper implements HttpMethodWrapper {
 		uri += parameterName + "=" + parameterValue + "&";
 	}
 
-	public int executeMethod(HttpClient client) throws HttpException {
-        try {
+	public int executeMethod() throws IOException{ 
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(false);
@@ -31,11 +27,6 @@ public class GetMethodWrapper implements HttpMethodWrapper {
             this.response = new Response(connection);
             return response.getCode();
 
-        } catch (MalformedURLException e) {
-        	throw new HttpException(e.getMessage(),e);
-        } catch (IOException e) {
-        	throw new HttpException(e.getMessage(),e);
-        }
 	}
 
 	private String getFullUri() {

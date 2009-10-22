@@ -3,31 +3,27 @@ package br.com.caelum.rest.client.http;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.http.HttpException;
-import org.apache.http.client.HttpClient;
 
 public class PostMethodWrapper implements HttpMethodWrapper {
 
 	private final String uri;
 	private Map<String,String> params = new HashMap<String,String>();
 	private Response response;
+	private final boolean shouldReadContent;
 
-	public PostMethodWrapper(String uri) {
+	public PostMethodWrapper(String uri, boolean shouldReadContent) {
 		this.uri = uri;
+		this.shouldReadContent = shouldReadContent;
 	}
 
 	public void addParameter(String parameterName, String parameterValue) {
 		params.put(parameterName, parameterValue);
 	}
 
-	public int executeMethod(HttpClient client) throws HttpException {
-        try {
+	public int executeMethod() throws IOException{
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
@@ -38,14 +34,9 @@ public class PostMethodWrapper implements HttpMethodWrapper {
             }
             writer.close();
 
-            this.response = new Response(connection);
+            this.response = new Response(connection, shouldReadContent);
             return response.getCode();
 
-        } catch (MalformedURLException e) {
-        	throw new HttpException(e.getMessage(),e);
-        } catch (IOException e) {
-        	throw new HttpException(e.getMessage(),e);
-        }
 	}
 
 	public String getResponseBodyAsString() throws IOException{ 

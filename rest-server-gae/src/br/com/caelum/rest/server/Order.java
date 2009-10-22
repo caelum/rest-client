@@ -50,7 +50,7 @@ public class Order implements Restful {
 
 	private String getRealStatus() {
 		Calendar earlier = Calendar.getInstance();
-		earlier.add(Calendar.MINUTE, -5);
+		earlier.add(Calendar.MINUTE, -1);
 		if(status==Status.PROCESSING && payMoment.before(earlier)) {
 			status = Status.COMPLETED;
 		}

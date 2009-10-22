@@ -4,14 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
-import org.apache.http.params.BasicHttpParams;
 import org.json.JSONException;
 import org.json.JSONWriter;
 
@@ -44,25 +36,14 @@ public class IndexController {
 		this.info = info;
 	}
 	
-	private HttpClient getClient() {
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
-		schemeRegistry.register(
-		  new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-		BasicHttpParams params = new BasicHttpParams();
-		SingleClientConnManager connmgr = 
-		  new SingleClientConnManager(params, schemeRegistry);
-		return new DefaultHttpClient(connmgr, params);
-	}
-
 	@Path("/createSomething")
 	@Get
-	public void createSomething(HttpMethod method, String uri, String contentName, String contentValue) throws JSONException, IOException, HttpException {
-		HttpClient client = getClient();
+	public void createSomething(HttpMethod method, String uri, String contentName, String contentValue) throws JSONException, IOException {
 
 		HttpMethodWrapper httpMethod = method.getHttpMethod(uri);
 
 		httpMethod.addParameter(contentName, contentValue);
-		int resultCode = httpMethod.executeMethod(client);
+		int resultCode = httpMethod.executeMethod();
 		String response = httpMethod.getResponseBodyAsString();
 
 		JSONWriter json = getWriter();
@@ -88,12 +69,11 @@ public class IndexController {
 
 	@Path("/grab")
 	@Get
-	public void grab(String uri) throws JSONException, IOException, HttpException {
-		HttpClient client = getClient();
-
+	public void grab(String uri) throws JSONException, IOException {
+		
 		HttpMethodWrapper httpMethod = HttpMethod.GET.getHttpMethod(uri);
 
-		int resultCode = httpMethod.executeMethod(client);
+		int resultCode = httpMethod.executeMethod();
 		String response = httpMethod.getResponseBodyAsString();
 
 		JSONWriter json = getWriter();
@@ -133,11 +113,10 @@ public class IndexController {
 
 	@Get
 	@Path("/navigate")
-	public void navigate(HttpMethod method, String href, String rel) throws JSONException, IOException, HttpException {
-		HttpClient client = getClient();
+	public void navigate(HttpMethod method, String href, String rel) throws JSONException, IOException {
 		HttpMethodWrapper httpMethod = method.getHttpMethod(href);
 
-		int resultCode = httpMethod.executeMethod(client);
+		int resultCode = httpMethod.executeMethod();
 		String response = httpMethod.getResponseBodyAsString();
 
 		JSONWriter json = getWriter();

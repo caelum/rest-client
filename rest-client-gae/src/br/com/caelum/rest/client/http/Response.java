@@ -15,18 +15,26 @@ public class Response {
 	private Map<String, List<String>> headers;
 
 	public Response(HttpURLConnection connection) throws IOException {
+		this(connection, true);
+	}
+
+	public Response(HttpURLConnection connection, boolean shouldReadContent)
+			throws IOException {
 		this.code = connection.getResponseCode();
-		InputStream stream =  (InputStream) connection.getContent();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		while(true) {
-			String partial = reader.readLine();
-			if(partial==null){
-				break;
+		if (shouldReadContent) {
+			InputStream stream = (InputStream) connection.getContent();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					stream));
+			while (true) {
+				String partial = reader.readLine();
+				if (partial == null) {
+					break;
+				}
+				if (content.length() != 0) {
+					content += "\n";
+				}
+				content += partial;
 			}
-			if(content.length()!=0) {
-				content += "\n";
-			}
-			content += partial;
 		}
 		this.headers = connection.getHeaderFields();
 	}
@@ -42,7 +50,5 @@ public class Response {
 	public List<String> getHeader(String key) {
 		return headers.get(key);
 	}
-	
-	
 
 }

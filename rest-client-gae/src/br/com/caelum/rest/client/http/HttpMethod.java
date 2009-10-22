@@ -5,7 +5,7 @@ public enum HttpMethod {
 	POST {
 		@Override
 		public HttpMethodWrapper getHttpMethod(String uri) {
-			return new PostMethodWrapper(uri);
+			return new PostMethodWrapper(uri, false);
 		}
 	},
 	PUT {

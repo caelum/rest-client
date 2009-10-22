@@ -3,13 +3,9 @@ package br.com.caelum.rest.client.http;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.http.HttpException;
-import org.apache.http.client.HttpClient;
 
 public class DeleteMethodWrapper implements HttpMethodWrapper {
 
@@ -25,8 +21,7 @@ public class DeleteMethodWrapper implements HttpMethodWrapper {
 		params.put(parameterName, parameterValue);
 	}
 
-	public int executeMethod(HttpClient client) throws HttpException {
-        try {
+	public int executeMethod() throws IOException {
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
@@ -40,11 +35,6 @@ public class DeleteMethodWrapper implements HttpMethodWrapper {
             this.response = new Response(connection);
             return response.getCode();
 
-        } catch (MalformedURLException e) {
-        	throw new HttpException(e.getMessage(),e);
-        } catch (IOException e) {
-        	throw new HttpException(e.getMessage(),e);
-        }
 	}
 
 	public String getResponseBodyAsString() throws IOException{ 
