@@ -2,27 +2,38 @@ README
 ======
 
 
-This project is a small example (and base for vraptor 3 - restful support) for restful services in the meaning that a restful service is only a restful service if it provides a way to work with hypercontent.
+This project is a small example (and base for vraptor 3 - restful support) for hand-testing restful services.
+We use the word "restful" in the meaning that a it provides resources working with hypercontent.
 
 TEST IT LIVE!
 =============
 
 Access http://restful-client.appspot.com/ and try to post an order to:
 a) entry point: http://restful-server.appspot.com/order
-b) method: post
-c) name: order
+b) method: POST
+c) name: content
 d) content: any order content (it will not be validated)
 
-After posting the order, you will receive a 201 response with your order location. Simply access it to be allowed to view it.
-You can then choose to do something with that order through the hyperlinks received (i.e. cancel it by sending a DELETE to the uri given by
-the resource itself).
+After posting the order, you will receive a 201 response with your order location.
+
+You can then view (GET) this order to see its representation. By parsing the representation, one can discover
+what you can do with your order:
+
+- pay (request a payment POST)
+- cancel (request an order DELETE)
+- update (request an order UPDATE)
+- view (request an order GET)
+
+Anytime you can check your order status by getting it. After payment your status will change to PREPARING
+and after one minute it will be DONE.
+If you cancel your order, it will be CANCELED.
 
 
 TEAM
 ====
 
 So far Adriano Almeida and Guilherme Silveira are working on this project.
-
+Lucas Cavalcanti also contributed with what will probably become vraptor's hypermedia based resources small library.
 
 
 
