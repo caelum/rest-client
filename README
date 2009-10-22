@@ -4,6 +4,19 @@ README
 
 This project is a small example (and base for vraptor 3 - restful support) for restful services in the meaning that a restful service is only a restful service if it provides a way to work with hypercontent.
 
+TEST IT LIVE!
+=============
+
+Access http://restful-client.appspot.com/ and try to post an order to:
+a) entry point: http://restful-server.appspot.com/order
+b) method: post
+c) name: order
+d) content: any order content (it will not be validated)
+
+After posting the order, you will receive a 201 response with your order location. Simply access it to be allowed to view it.
+You can then choose to do something with that order through the hyperlinks received (i.e. cancel it by sending a DELETE to the uri given by
+the resource itself).
+
 
 TEAM
 ====
