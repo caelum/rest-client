@@ -22,9 +22,7 @@
 					$('#view').show();
 				}
 				function callbackCriado(uri) {
-					console.log(uri);
 					return function(result){
-						console.log(result);
 						logActivity(result.method, result.uri, result.responseCode, result.location);
 					};
 				}
